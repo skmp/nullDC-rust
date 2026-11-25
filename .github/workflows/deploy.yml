@@ -237,6 +237,12 @@ jobs:
           name: site-dist-${{ github.sha }}
           path: dist
 
+      - name: Add the lineage viewer
+        # the nullDC lineage viewer (static, ~22 MB) lives in skmp/nulldc.emudev.org under lineage/; copy it in at deploy
+        run: |
+          git clone --depth 1 https://github.com/skmp/nulldc.emudev.org.git "$RUNNER_TEMP/nulldc-site"
+          cp -r "$RUNNER_TEMP/nulldc-site/lineage" dist/lineage
+
       - name: Download all build artifacts
         uses: actions/download-artifact@v4
         with:
